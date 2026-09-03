@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Categoria;
+use App\Models\Stock;
+use App\Models\MovimientoStock;
 
 class Producto extends Model
 {
@@ -30,5 +32,15 @@ class Producto extends Model
     public function categoria()
     {
         return $this->belongsTo(Categoria::class);
+    }
+
+    public function stock()
+    {
+        return $this->hasOne(Stock::class);
+    }
+
+    public function movimientosStock()
+    {
+        return $this->hasMany(MovimientoStock::class);
     }
 }
