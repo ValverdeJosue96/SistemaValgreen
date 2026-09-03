@@ -1,27 +1,31 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard - Valgreen</title>
-</head>
-<body>
+@extends('layouts.app')
 
-    <h1>Bienvenido a Valgreen</h1>
+@section('title', 'Dashboard - Valgreen')
 
-    <p>
-        Usuario:
-        {{ auth()->user()->nombres }}
-        {{ auth()->user()->primer_apellido }}
-    </p>
+@section('content')
 
-    <p>
-        Has iniciado sesión correctamente.
-    </p>
+    <h1>Dashboard</h1>
 
-    <form method="POST" action="/logout">
-        @csrf
-        <button type="submit">Cerrar sesión</button>
-    </form>
+    <div class="card">
 
-</body>
-</html>
+        <h2>Bienvenido a Valgreen</h2>
+
+        <br>
+
+        <p>
+            Has iniciado sesión correctamente.
+        </p>
+
+        <br>
+
+        <p>
+            Usuario:
+            <strong>
+                {{ auth()->user()->nombres }}
+                {{ auth()->user()->primer_apellido }}
+            </strong>
+        </p>
+
+    </div>
+
+@endsection

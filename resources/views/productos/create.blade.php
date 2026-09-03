@@ -1,61 +1,75 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Registrar producto</title>
-</head>
-<body>
+@extends('layouts.app')
 
-<h1>Registrar producto</h1>
+@section('title', 'Registrar producto - Valgreen')
 
-<form method="POST" action="/productos">
-    @csrf
+@section('content')
 
-    <label>Categoría:</label>
+    <h1>Registrar producto</h1>
 
-    <select name="categoria_id" required>
+    <div class="card">
 
-        <option value="">Seleccione</option>
+        <form method="POST" action="/productos">
 
-        @foreach($categorias as $categoria)
+            @csrf
 
-            <option value="{{ $categoria->id }}">
-                {{ $categoria->nombre }}
-            </option>
+            <label>
+                Categoría
+            </label>
 
-        @endforeach
+            <select name="categoria_id" required>
 
-    </select>
+                <option value="">
+                    Seleccione una categoría
+                </option>
 
-    <br><br>
+                @foreach($categorias as $categoria)
 
-    <label>Nombre:</label>
+                    <option value="{{ $categoria->id }}">
+                        {{ $categoria->nombre }}
+                    </option>
 
-    <input type="text" name="nombre" required>
+                @endforeach
 
-    <br><br>
+            </select>
 
-    <label>Descripción:</label>
 
-    <textarea name="descripcion"></textarea>
+            <label>
+                Nombre
+            </label>
 
-    <br><br>
+            <input
+                type="text"
+                name="nombre"
+                required
+            >
 
-    <label>Precio:</label>
 
-    <input type="number"
-           name="precio"
-           step="0.01"
-           min="0"
-           required>
+            <label>
+                Descripción
+            </label>
 
-    <br><br>
+            <textarea name="descripcion"></textarea>
 
-    <button type="submit">
-        Guardar producto
-    </button>
 
-</form>
+            <label>
+                Precio
+            </label>
 
-</body>
-</html>
+            <input
+                type="number"
+                name="precio"
+                step="0.01"
+                min="0"
+                required
+            >
+
+
+            <button type="submit" class="btn">
+                Guardar producto
+            </button>
+
+        </form>
+
+    </div>
+
+@endsection

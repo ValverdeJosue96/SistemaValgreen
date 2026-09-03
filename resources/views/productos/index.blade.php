@@ -1,54 +1,65 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Productos - Valgreen</title>
-</head>
-<body>
+@extends('layouts.app')
 
-<h1>Productos</h1>
+@section('title', 'Productos - Valgreen')
 
-<a href="/dashboard">Inicio</a>
+@section('content')
 
-<br><br>
+    <h1>Productos</h1>
 
-<a href="/productos/create">
-    Registrar producto
-</a>
+    <div class="card">
 
-@if(session('success'))
-    <p>{{ session('success') }}</p>
-@endif
+        <a href="/productos/create" class="btn">
+            + Registrar producto
+        </a>
 
-<table border="1" cellpadding="8">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Categoría</th>
-            <th>Precio</th>
-        </tr>
-    </thead>
+        <table>
 
-    <tbody>
+            <thead>
 
-    @foreach($productos as $producto)
+                <tr>
+                    <th>Nombre</th>
+                    <th>Categoría</th>
+                    <th>Precio</th>
+                </tr>
 
-        <tr>
-            <td>{{ $producto->nombre }}</td>
+            </thead>
 
-            <td>
-                {{ $producto->categoria->nombre }}
-            </td>
+            <tbody>
 
-            <td>
-                Bs {{ $producto->precio }}
-            </td>
-        </tr>
+                @forelse($productos as $producto)
 
-    @endforeach
+                    <tr>
 
-    </tbody>
-</table>
+                        <td>
+                            {{ $producto->nombre }}
+                        </td>
 
-</body>
-</html>
+                        <td>
+                            {{ $producto->categoria->nombre }}
+                        </td>
+
+                        <td>
+                            Bs {{ $producto->precio }}
+                        </td>
+
+                    </tr>
+
+                @empty
+
+                    <tr>
+
+                        <td colspan="3">
+                            No existen productos registrados.
+                        </td>
+
+                    </tr>
+
+                @endforelse
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+@endsection

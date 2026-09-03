@@ -1,53 +1,60 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Stock - Valgreen</title>
-</head>
-<body>
+@extends('layouts.app')
 
-<h1>Control de Stock</h1>
+@section('title', 'Stock - Valgreen')
 
-<a href="/dashboard">Inicio</a>
+@section('content')
 
-<br><br>
+    <h1>Control de Stock</h1>
 
-<a href="/stock/create">
-    Registrar movimiento
-</a>
+    <div class="card">
 
-<br><br>
+        <a href="/stock/create" class="btn">
+            + Registrar movimiento
+        </a>
 
-@if(session('success'))
-    <p>{{ session('success') }}</p>
-@endif
+        <table>
 
-<table border="1" cellpadding="8">
+            <thead>
 
-    <thead>
-        <tr>
-            <th>Producto</th>
-            <th>Stock actual</th>
-        </tr>
-    </thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Stock actual</th>
+                </tr>
 
-    <tbody>
+            </thead>
 
-    @foreach($productos as $producto)
+            <tbody>
 
-        <tr>
-            <td>{{ $producto->nombre }}</td>
+                @forelse($productos as $producto)
 
-            <td>
-                {{ $producto->stock->cantidad ?? 0 }}
-            </td>
-        </tr>
+                    <tr>
 
-    @endforeach
+                        <td>
+                            {{ $producto->nombre }}
+                        </td>
 
-    </tbody>
+                        <td>
+                            {{ $producto->stock->cantidad ?? 0 }}
+                        </td>
 
-</table>
+                    </tr>
 
-</body>
-</html>
+                @empty
+
+                    <tr>
+
+                        <td colspan="2">
+                            No existen productos registrados.
+                        </td>
+
+                    </tr>
+
+                @endforelse
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+@endsection

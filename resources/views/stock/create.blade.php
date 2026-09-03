@@ -1,73 +1,84 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Movimiento de Stock</title>
-</head>
-<body>
+@extends('layouts.app')
 
-<h1>Registrar movimiento de stock</h1>
+@section('title', 'Movimiento de Stock - Valgreen')
 
-<form method="POST" action="/stock">
+@section('content')
 
-    @csrf
+    <h1>Registrar movimiento de stock</h1>
 
-    <label>Producto:</label>
+    <div class="card">
 
-    <select name="producto_id" required>
+        <form method="POST" action="/stock">
 
-        <option value="">Seleccione</option>
+            @csrf
 
-        @foreach($productos as $producto)
+            <label>
+                Producto
+            </label>
 
-            <option value="{{ $producto->id }}">
-                {{ $producto->nombre }}
-            </option>
+            <select name="producto_id" required>
 
-        @endforeach
+                <option value="">
+                    Seleccione un producto
+                </option>
 
-    </select>
+                @foreach($productos as $producto)
 
-    <br><br>
+                    <option value="{{ $producto->id }}">
+                        {{ $producto->nombre }}
+                    </option>
 
-    <label>Tipo de movimiento:</label>
+                @endforeach
 
-    <select name="tipo_movimiento_id" required>
+            </select>
 
-        <option value="">Seleccione</option>
 
-        @foreach($tipos as $tipo)
+            <label>
+                Tipo de movimiento
+            </label>
 
-            <option value="{{ $tipo->id }}">
-                {{ $tipo->nombre }}
-            </option>
+            <select name="tipo_movimiento_id" required>
 
-        @endforeach
+                <option value="">
+                    Seleccione
+                </option>
 
-    </select>
+                @foreach($tipos as $tipo)
 
-    <br><br>
+                    <option value="{{ $tipo->id }}">
+                        {{ $tipo->nombre }}
+                    </option>
 
-    <label>Cantidad:</label>
+                @endforeach
 
-    <input type="number"
-           name="cantidad"
-           min="1"
-           required>
+            </select>
 
-    <br><br>
 
-    <label>Motivo:</label>
+            <label>
+                Cantidad
+            </label>
 
-    <textarea name="motivo"></textarea>
+            <input
+                type="number"
+                name="cantidad"
+                min="1"
+                required
+            >
 
-    <br><br>
 
-    <button type="submit">
-        Registrar movimiento
-    </button>
+            <label>
+                Motivo
+            </label>
 
-</form>
+            <textarea name="motivo"></textarea>
 
-</body>
-</html>
+
+            <button type="submit" class="btn">
+                Registrar movimiento
+            </button>
+
+        </form>
+
+    </div>
+
+@endsection
