@@ -144,7 +144,7 @@
                 📊 Stock
             </a>
 
-            <a href="#"
+            <a href="/ventas"
                class="nav-link">
                 💰 Ventas
             </a>

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\VentaController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,7 +26,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/stock/create', [StockController::class, 'create']);
     Route::post('/stock', [StockController::class, 'store']);
 
-});
+    Route::get('/ventas', [VentaController::class, 'index']);
+    Route::get('/ventas/create', [VentaController::class, 'create']);
+    Route::post('/ventas', [VentaController::class, 'store']);
+
+    });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
