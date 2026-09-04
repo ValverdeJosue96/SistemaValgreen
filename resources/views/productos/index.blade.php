@@ -4,61 +4,96 @@
 
 @section('content')
 
-    <h1>Productos</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-    <div class="card">
+        <div>
 
-        <a href="/productos/create" class="btn">
+            <h1 class="fw-bold">
+                Productos
+            </h1>
+
+            <p class="text-muted mb-0">
+                Administración de productos de la repostería
+            </p>
+
+        </div>
+
+        <a href="/productos/create"
+           class="btn btn-valgreen">
+
             + Registrar producto
+
         </a>
 
-        <table>
+    </div>
 
-            <thead>
 
-                <tr>
-                    <th>Nombre</th>
-                    <th>Categoría</th>
-                    <th>Precio</th>
-                </tr>
+    <div class="card shadow-sm border-0">
 
-            </thead>
+        <div class="card-body">
 
-            <tbody>
+            <div class="table-responsive">
 
-                @forelse($productos as $producto)
+                <table class="table table-hover align-middle">
 
-                    <tr>
+                    <thead>
 
-                        <td>
-                            {{ $producto->nombre }}
-                        </td>
+                        <tr>
 
-                        <td>
-                            {{ $producto->categoria->nombre }}
-                        </td>
+                            <th>Producto</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
 
-                        <td>
-                            Bs {{ $producto->precio }}
-                        </td>
+                        </tr>
 
-                    </tr>
+                    </thead>
 
-                @empty
+                    <tbody>
 
-                    <tr>
+                        @forelse($productos as $producto)
 
-                        <td colspan="3">
-                            No existen productos registrados.
-                        </td>
+                            <tr>
 
-                    </tr>
+                                <td class="fw-semibold">
+                                    {{ $producto->nombre }}
+                                </td>
 
-                @endforelse
+                                <td>
+                                    <span class="badge text-bg-light">
+                                        {{ $producto->categoria->nombre }}
+                                    </span>
+                                </td>
 
-            </tbody>
+                                <td>
+                                    <strong>
+                                        Bs {{ $producto->precio }}
+                                    </strong>
+                                </td>
 
-        </table>
+                            </tr>
+
+                        @empty
+
+                            <tr>
+
+                                <td colspan="3"
+                                    class="text-center text-muted py-4">
+
+                                    No existen productos registrados.
+
+                                </td>
+
+                            </tr>
+
+                        @endforelse
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
 
     </div>
 

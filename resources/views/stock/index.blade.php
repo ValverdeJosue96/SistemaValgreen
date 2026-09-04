@@ -4,56 +4,116 @@
 
 @section('content')
 
-    <h1>Control de Stock</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
 
-    <div class="card">
+        <div>
 
-        <a href="/stock/create" class="btn">
+            <h1 class="fw-bold">
+                Control de Stock
+            </h1>
+
+            <p class="text-muted mb-0">
+                Inventario de productos terminados
+            </p>
+
+        </div>
+
+        <a href="/stock/create"
+           class="btn btn-valgreen">
+
             + Registrar movimiento
+
         </a>
 
-        <table>
+    </div>
 
-            <thead>
 
-                <tr>
-                    <th>Producto</th>
-                    <th>Stock actual</th>
-                </tr>
+    <div class="card shadow-sm border-0">
 
-            </thead>
+        <div class="card-body">
 
-            <tbody>
+            <div class="table-responsive">
 
-                @forelse($productos as $producto)
+                <table class="table table-hover align-middle">
 
-                    <tr>
+                    <thead>
 
-                        <td>
-                            {{ $producto->nombre }}
-                        </td>
+                        <tr>
 
-                        <td>
-                            {{ $producto->stock->cantidad ?? 0 }}
-                        </td>
+                            <th>Producto</th>
+                            <th>Stock actual</th>
+                            <th>Estado</th>
 
-                    </tr>
+                        </tr>
 
-                @empty
+                    </thead>
 
-                    <tr>
+                    <tbody>
 
-                        <td colspan="2">
-                            No existen productos registrados.
-                        </td>
+                        @forelse($productos as $producto)
 
-                    </tr>
+                            @php
+                                $cantidad = $producto->stock->cantidad ?? 0;
+                            @endphp
 
-                @endforelse
+                            <tr>
 
-            </tbody>
+                                <td class="fw-semibold">
+                                    {{ $producto->nombre }}
+                                </td>
 
-        </table>
+                                <td>
+
+                                    <strong>
+                                        {{ $cantidad }}
+                                    </strong>
+
+                                    unidades
+
+                                </td>
+
+                                <td>
+
+                                    @if($cantidad > 0)
+
+                                        <span class="badge text-bg-success">
+                                            Disponible
+                                        </span>
+
+                                    @else
+
+                                        <span class="badge text-bg-danger">
+                                            Agotado
+                                        </span>
+
+                                    @endif
+
+                                </td>
+
+                            </tr>
+
+                        @empty
+
+                            <tr>
+
+                                <td colspan="3"
+                                    class="text-center text-muted py-4">
+
+                                    No existen productos registrados.
+
+                                </td>
+
+                            </tr>
+
+                        @endforelse
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
 
     </div>
 

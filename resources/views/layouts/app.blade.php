@@ -2,6 +2,7 @@
 <html lang="es">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport"
@@ -11,184 +12,105 @@
         @yield('title', 'Valgreen')
     </title>
 
+    <!-- Bootstrap 5.3 -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
     <style>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        :root {
+            --valgreen: #245c35;
+            --valgreen-dark: #1b4729;
+            --valgreen-light: #eaf3ed;
         }
 
         body {
-            font-family: Arial, sans-serif;
-            background: #f5f6f8;
-            color: #333;
+            background-color: #f5f6f8;
         }
 
-        .layout {
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* MENÚ */
+        /* Sidebar */
 
         .sidebar {
-            width: 240px;
-            background: #245c35;
-            color: white;
-            padding: 25px 15px;
+            width: 250px;
+            min-height: 100vh;
+            background-color: var(--valgreen);
         }
 
         .logo {
-            text-align: center;
-            font-size: 28px;
+            font-size: 26px;
             font-weight: bold;
-            margin-bottom: 35px;
+            letter-spacing: 1px;
         }
 
-        .usuario {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
-
-        .menu a {
-            display: block;
+        .sidebar .nav-link {
             color: white;
-            text-decoration: none;
-            padding: 13px 15px;
-            border-radius: 6px;
-            margin-bottom: 6px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 5px;
         }
 
-        .menu a:hover {
-            background: rgba(255,255,255,0.15);
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background-color: var(--valgreen-dark);
+            color: white;
         }
 
-        .logout {
-            margin-top: 30px;
-        }
+        /* Contenido */
 
-        .logout button {
-            width: 100%;
-            padding: 11px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        /* CONTENIDO */
-
-        .main {
-            flex: 1;
+        .main-content {
+            min-height: 100vh;
         }
 
         .topbar {
-            background: white;
-            padding: 20px 30px;
+            background-color: white;
             border-bottom: 1px solid #ddd;
         }
 
-        .content {
-            padding: 30px;
-        }
+        /* Tarjetas */
 
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-        }
-
-        /* BOTONES */
-
-        .btn {
-            display: inline-block;
-            padding: 10px 16px;
-            background: #245c35;
-            color: white;
-            text-decoration: none;
+        .dashboard-card {
             border: none;
-            border-radius: 6px;
-            cursor: pointer;
+            border-radius: 12px;
+            transition: 0.2s;
         }
 
-        .btn:hover {
-            opacity: 0.9;
+        .dashboard-card:hover {
+            transform: translateY(-2px);
         }
 
-        /* TABLAS */
+        /* Botón Valgreen */
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+        .btn-valgreen {
+            background-color: var(--valgreen);
+            color: white;
+            border: none;
         }
 
-        th,
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-            text-align: left;
-        }
-
-        th {
-            background: #f0f2f3;
-        }
-
-        /* FORMULARIOS */
-
-        label {
-            display: block;
-            margin-bottom: 6px;
-            font-weight: bold;
-        }
-
-        input,
-        select,
-        textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-bottom: 15px;
-        }
-
-        textarea {
-            min-height: 100px;
-        }
-
-        .alert {
-            padding: 12px;
-            background: #dff0d8;
-            border-radius: 6px;
-            margin-bottom: 20px;
+        .btn-valgreen:hover {
+            background-color: var(--valgreen-dark);
+            color: white;
         }
 
     </style>
+
 </head>
 
 <body>
 
-<div class="layout">
+<div class="d-flex">
 
-    <!-- MENÚ LATERAL -->
+    <!-- SIDEBAR -->
 
-    <aside class="sidebar">
+    <aside class="sidebar p-3">
 
-        <div class="logo">
-            VALGREEN
+        <div class="logo text-center text-white mb-4">
+            🍰 VALGREEN
         </div>
 
         @auth
 
-            <div class="usuario">
+            <div class="text-center text-white mb-4 pb-3 border-bottom">
 
                 <strong>
                     {{ auth()->user()->nombres }}
@@ -204,40 +126,54 @@
 
         @endauth
 
-        <nav class="menu">
 
-            <a href="/dashboard">
+        <nav class="nav flex-column">
+
+            <a href="/dashboard"
+               class="nav-link">
                 🏠 Dashboard
             </a>
 
-            <a href="/productos">
+            <a href="/productos"
+               class="nav-link">
                 📦 Productos
             </a>
 
-            <a href="/stock">
+            <a href="/stock"
+               class="nav-link">
                 📊 Stock
             </a>
 
-            <a href="#">
+            <a href="#"
+               class="nav-link">
                 💰 Ventas
             </a>
 
-            <a href="#">
+            <a href="#"
+               class="nav-link">
                 📝 Pedidos
+            </a>
+
+            <a href="#"
+               class="nav-link">
+                👥 Usuarios
             </a>
 
         </nav>
 
+
         @auth
 
-            <div class="logout">
+            <div class="mt-4">
 
-                <form method="POST" action="/logout">
+                <form method="POST"
+                      action="/logout">
 
                     @csrf
 
-                    <button type="submit">
-                        Cerrar sesión
+                    <button type="submit"
+                            class="btn btn-light w-100">
+                        🚪 Cerrar sesión
                     </button>
 
                 </form>
@@ -249,35 +185,84 @@
     </aside>
 
 
-    <!-- CONTENIDO PRINCIPAL -->
+    <!-- CONTENIDO -->
 
-    <main class="main">
+    <main class="main-content flex-grow-1">
 
-        <div class="topbar">
+        <!-- BARRA SUPERIOR -->
 
-            <strong>
-                Sistema de gestión - Repostería Valgreen
-            </strong>
+        <div class="topbar p-3">
+
+            <div class="container-fluid">
+
+                <strong>
+                    Sistema de gestión de Repostería Valgreen
+                </strong>
+
+            </div>
 
         </div>
 
-        <section class="content">
+
+        <!-- CONTENIDO DE CADA PÁGINA -->
+
+        <div class="container-fluid p-4">
 
             @if(session('success'))
 
-                <div class="alert">
+                <div class="alert alert-success alert-dismissible fade show">
+
                     {{ session('success') }}
+
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert">
+                    </button>
+
                 </div>
 
             @endif
 
+
+            @if($errors->any())
+
+                <div class="alert alert-danger">
+
+                    <strong>
+                        Se encontraron errores:
+                    </strong>
+
+                    <ul class="mb-0">
+
+                        @foreach($errors->all() as $error)
+
+                            <li>
+                                {{ $error }}
+                            </li>
+
+                        @endforeach
+
+                    </ul>
+
+                </div>
+
+            @endif
+
+
             @yield('content')
 
-        </section>
+        </div>
 
     </main>
 
 </div>
+
+
+<!-- Bootstrap JavaScript -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+</script>
 
 </body>
 

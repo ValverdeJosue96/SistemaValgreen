@@ -4,71 +4,136 @@
 
 @section('content')
 
-    <h1>Registrar producto</h1>
+    <div class="mb-4">
 
-    <div class="card">
+        <h1 class="fw-bold">
+            Registrar producto
+        </h1>
 
-        <form method="POST" action="/productos">
+        <p class="text-muted">
+            Agrega un nuevo producto al catálogo.
+        </p>
 
-            @csrf
-
-            <label>
-                Categoría
-            </label>
-
-            <select name="categoria_id" required>
-
-                <option value="">
-                    Seleccione una categoría
-                </option>
-
-                @foreach($categorias as $categoria)
-
-                    <option value="{{ $categoria->id }}">
-                        {{ $categoria->nombre }}
-                    </option>
-
-                @endforeach
-
-            </select>
+    </div>
 
 
-            <label>
-                Nombre
-            </label>
+    <div class="card shadow-sm border-0">
 
-            <input
-                type="text"
-                name="nombre"
-                required
-            >
+        <div class="card-body p-4">
+
+            <form method="POST"
+                  action="/productos">
+
+                @csrf
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Categoría
+                        </label>
+
+                        <select name="categoria_id"
+                                class="form-select"
+                                required>
+
+                            <option value="">
+                                Seleccione una categoría
+                            </option>
+
+                            @foreach($categorias as $categoria)
+
+                                <option value="{{ $categoria->id }}">
+
+                                    {{ $categoria->nombre }}
+
+                                </option>
+
+                            @endforeach
+
+                        </select>
+
+                    </div>
 
 
-            <label>
-                Descripción
-            </label>
+                    <div class="col-md-6 mb-3">
 
-            <textarea name="descripcion"></textarea>
+                        <label class="form-label">
+                            Nombre del producto
+                        </label>
 
+                        <input type="text"
+                               name="nombre"
+                               class="form-control"
+                               placeholder="Ej. Torta de chocolate"
+                               required>
 
-            <label>
-                Precio
-            </label>
+                    </div>
 
-            <input
-                type="number"
-                name="precio"
-                step="0.01"
-                min="0"
-                required
-            >
+                </div>
 
 
-            <button type="submit" class="btn">
-                Guardar producto
-            </button>
+                <div class="mb-3">
 
-        </form>
+                    <label class="form-label">
+                        Descripción
+                    </label>
+
+                    <textarea name="descripcion"
+                              class="form-control"
+                              rows="3"
+                              placeholder="Descripción del producto"></textarea>
+
+                </div>
+
+
+                <div class="col-md-4 mb-4">
+
+                    <label class="form-label">
+                        Precio
+                    </label>
+
+                    <div class="input-group">
+
+                        <span class="input-group-text">
+                            Bs
+                        </span>
+
+                        <input type="number"
+                               name="precio"
+                               class="form-control"
+                               step="0.01"
+                               min="0"
+                               placeholder="0.00"
+                               required>
+
+                    </div>
+
+                </div>
+
+
+                <div class="d-flex gap-2">
+
+                    <button type="submit"
+                            class="btn btn-valgreen">
+
+                        Guardar producto
+
+                    </button>
+
+                    <a href="/productos"
+                       class="btn btn-outline-secondary">
+
+                        Cancelar
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
 
     </div>
 
