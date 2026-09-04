@@ -25,20 +25,30 @@ class ProductoController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $datos = $request->validate([
-            'categoria_id' => 'required|exists:categorias,id',
-            'nombre' => 'required|max:100',
-            'descripcion' => 'nullable',
-            'precio' => 'required|numeric|min:0',
-        ]);
+{
+    $datos = $request->validate([
+        'categoria_id' => 'required|exists:categorias,id',
+        'nombre' => 'required|max:100',
+        'descripcion' => 'nullable',
+        'precio' => 'required|numeric|min:0',
+        'imagen' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+    ]);
 
-        $datos['estado_producto_id'] = 1;
-        $datos['estado'] = 1;
+    // Guardar la imagen si se seleccionó una
+    if ($request->hasFile('imagen')) {
 
-        Producto::create($datos);
+        $ruta = $request->file('imagen')
+            ->store('productos', 'public');
 
-        return redirect('/productos')
-            ->with('success', 'Producto registrado correctamente.');
+        $datos['imagen'] = $ruta;
     }
+
+    $datos['estado_producto_id'] = 1;
+    $datos['estado'] = 1;
+
+    Producto::create($datos);
+
+    return redirect('/productos')
+        ->with('success', 'Producto registrado correctamente.');
+}
 }

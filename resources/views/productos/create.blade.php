@@ -22,7 +22,8 @@
         <div class="card-body p-4">
 
             <form method="POST"
-                  action="/productos">
+            action="/productos"
+            enctype="multipart/form-data">
 
                 @csrf
 
@@ -108,6 +109,26 @@
                                placeholder="0.00"
                                required>
 
+                    </div>
+
+                </div>
+
+                <div class="mb-4">
+
+                    <label class="form-label">
+                        Imagen del producto
+                    </label>
+
+                    <input
+                        type="file"
+                        name="imagen"
+                        class="form-control"
+                        accept="image/jpeg,image/png,image/jpg,image/webp"
+                    >
+
+                    <div class="form-text">
+                        Formatos permitidos: JPG, JPEG, PNG y WEBP.
+                        Tamaño máximo: 2 MB.
                     </div>
 
                 </div>

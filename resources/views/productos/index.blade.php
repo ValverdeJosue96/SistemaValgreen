@@ -40,10 +40,11 @@
 
                         <tr>
 
+                            <th>Imagen</th>
                             <th>Producto</th>
                             <th>Categoría</th>
                             <th>Precio</th>
-
+                            
                         </tr>
 
                     </thead>
@@ -54,29 +55,53 @@
 
                             <tr>
 
+                            <td>
+
+                                @if($producto->imagen)
+
+                                    <img src="{{ asset('storage/' . $producto->imagen) }}"
+                                    alt="{{ $producto->nombre }}"
+                                    width="70"
+                                    height="70"
+                                    style="object-fit: cover; border-radius: 8px;"
+                                    >
+
+                                @else
+
+                                    <span class="text-muted">
+                                        Sin imagen
+                                    </span>
+
+                                @endif
+
+                            </td>
                                 <td class="fw-semibold">
                                     {{ $producto->nombre }}
                                 </td>
 
-                                <td>
-                                    <span class="badge text-bg-light">
-                                        {{ $producto->categoria->nombre }}
-                                    </span>
-                                </td>
+                            <td>
 
-                                <td>
-                                    <strong>
-                                        Bs {{ $producto->precio }}
-                                    </strong>
-                                </td>
+                                <span class="badge text-bg-light">
+                                    {{ $producto->categoria->nombre }}
+                                </span>
 
-                            </tr>
+                            </td>
+
+                            <td>
+
+                                <strong>
+                                    Bs {{ $producto->precio }}
+                                </strong>
+
+                            </td>
+
+                        </tr>
 
                         @empty
 
                             <tr>
 
-                                <td colspan="3"
+                                <td colspan="4"
                                     class="text-center text-muted py-4">
 
                                     No existen productos registrados.
