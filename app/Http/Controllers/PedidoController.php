@@ -308,4 +308,80 @@ class PedidoController extends Controller
                 'Pedido registrado correctamente.'
             );
     }
+
+    /**
+ * Mostrar el detalle de un pedido.
+ */
+public function show($id)
+{
+    $pedido = Pedido::with([
+        'cliente',
+        'estadoPedido',
+        'detalles.producto',
+        'tortasPersonalizadas'
+    ])->findOrFail($id);
+
+    $estados = EstadoPedido::orderBy('id')->get();
+
+    return view('pedidos.show', compact(
+        'pedido',
+        'estados'
+    ));
+}
+
+
+/**
+ * Actualizar el estado de un pedido.
+ */
+public function actualizarEstado(Request $request, $id)
+{
+    $request->validate([
+        'estado_pedido_id' => 'required|exists:estados_pedido,id'
+    ]);
+
+    $pedido = Pedido::findOrFail($id);
+
+    $pedido->update([
+        'estado_pedido_id' => $request->estado_pedido_id,
+        'updated_by' => auth()->id() ?? 1
+    ]);
+
+    return redirect('/pedidos/' . $pedido->id)
+        ->with('success', 'Estado del pedido actualizado correctamente.');
+}
+
+
+/**
+ * Registrar el pago final del pedido.
+ */
+public function registrarPago(Request $request, $id)
+{
+    $request->validate([
+        'pago' => 'required|numeric|min:0.01'
+    ]);
+
+    $pedido = Pedido::findOrFail($id);
+
+    $pago = (float) $request->pago;
+
+    if ($pago > $pedido->saldo) {
+
+        return back()->withErrors([
+            'pago' => 'El pago no puede ser mayor al saldo pendiente.'
+        ]);
+    }
+
+    $nuevoPagoFinal = $pedido->pago_final + $pago;
+
+    $nuevoSaldo = $pedido->saldo - $pago;
+
+    $pedido->update([
+        'pago_final' => $nuevoPagoFinal,
+        'saldo' => $nuevoSaldo,
+        'updated_by' => auth()->id() ?? 1
+    ]);
+
+    return redirect('/pedidos/' . $pedido->id)
+        ->with('success', 'Pago registrado correctamente.');
+}
 }

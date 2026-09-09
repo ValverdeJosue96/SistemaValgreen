@@ -74,20 +74,14 @@
                     <tr>
 
                         <th>N.º</th>
-
                         <th>Cliente</th>
-
                         <th>Fecha de pedido</th>
-
                         <th>Fecha de entrega</th>
-
                         <th>Total</th>
-
                         <th>Anticipo</th>
-
                         <th>Saldo</th>
-
                         <th>Estado</th>
+                        <th>Acciones</th>
 
                     </tr>
 
@@ -169,13 +163,24 @@
 
                             </td>
 
+                            <td>
+
+                                <a href="/pedidos/{{ $pedido->id }}"
+                                class="btn btn-sm btn-outline-primary">
+
+                                    Ver detalle
+
+                                </a>
+
+                            </td>
+
                         </tr>
 
                     @empty
 
                         <tr>
 
-                            <td colspan="8"
+                            <td colspan="9"
                                 class="text-center text-muted py-5">
 
                                 No existen pedidos registrados.

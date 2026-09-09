@@ -3,6 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Cliente;
+use App\Models\EstadoPedido;
+use App\Models\DetallePedido;
+use App\Models\DetalleTortaPersonalizada;
 
 class Pedido extends Model
 {

@@ -35,6 +35,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/pedidos', [PedidoController::class, 'index']);
     Route::get('/pedidos/create', [PedidoController::class, 'create']);
     Route::post('/pedidos', [PedidoController::class, 'store']);
+    Route::get('/pedidos/{id}', [PedidoController::class, 'show']);
+    Route::put('/pedidos/{id}/estado', [PedidoController::class, 'actualizarEstado']);
+    Route::put('/pedidos/{id}/pago', [PedidoController::class, 'registrarPago']);
     
     Route::get('/clientes', [ClienteController::class, 'index']);
     Route::get('/clientes/create', [ClienteController::class, 'create']);
