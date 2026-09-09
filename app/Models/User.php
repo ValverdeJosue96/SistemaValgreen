@@ -3,13 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
-    use Notifiable, SoftDeletes;
-
     protected $table = 'usuarios';
 
     protected $fillable = [
@@ -29,11 +25,48 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected function casts(): array
+    protected $casts = [
+        'estado' => 'boolean',
+        'password' => 'hashed',
+    ];
+
+    /**
+     * Relación con el rol.
+     */
+    public function rol()
     {
-        return [
-            'password' => 'hashed',
-            'estado' => 'boolean',
-        ];
+        return $this->belongsTo(Rol::class, 'rol_id');
+    }
+
+    /**
+     * Pedidos creados por este usuario.
+     */
+    public function pedidosCreados()
+    {
+        return $this->hasMany(Pedido::class, 'created_by');
+    }
+
+    /**
+     * Pedidos actualizados por este usuario.
+     */
+    public function pedidosActualizados()
+    {
+        return $this->hasMany(Pedido::class, 'updated_by');
+    }
+
+    /**
+     * Ventas realizadas por este usuario.
+     */
+    public function ventas()
+    {
+        return $this->hasMany(Venta::class, 'usuario_id');
+    }
+
+    /**
+     * Movimientos de stock realizados por este usuario.
+     */
+    public function movimientosStock()
+    {
+        return $this->hasMany(MovimientoStock::class, 'created_by');
     }
 }

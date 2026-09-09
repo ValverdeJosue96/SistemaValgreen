@@ -7,6 +7,7 @@ use App\Http\Controllers\StockController;
 use App\Http\Controllers\VentaController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\UsuarioController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,10 +29,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/stock/create', [StockController::class, 'create']);
     Route::post('/stock', [StockController::class, 'store']);
 
+    // Ventas
     Route::get('/ventas', [VentaController::class, 'index']);
     Route::get('/ventas/create', [VentaController::class, 'create']);
     Route::post('/ventas', [VentaController::class, 'store']);
 
+    //Pedidos
     Route::get('/pedidos', [PedidoController::class, 'index']);
     Route::get('/pedidos/create', [PedidoController::class, 'create']);
     Route::post('/pedidos', [PedidoController::class, 'store']);
@@ -39,10 +42,21 @@ Route::middleware('auth')->group(function () {
     Route::put('/pedidos/{id}/estado', [PedidoController::class, 'actualizarEstado']);
     Route::put('/pedidos/{id}/pago', [PedidoController::class, 'registrarPago']);
     
+    //Clientes
     Route::get('/clientes', [ClienteController::class, 'index']);
     Route::get('/clientes/create', [ClienteController::class, 'create']);
     Route::post('/clientes', [ClienteController::class, 'store']);
-});
+
+    //Usuarios
+    Route::get('/usuarios', [UsuarioController::class, 'index']);
+    Route::get('/usuarios/create', [UsuarioController::class, 'create']);
+    Route::post('/usuarios', [UsuarioController::class, 'store']);
+
+    Route::get('/usuarios/{id}/edit', [UsuarioController::class, 'edit']);
+    Route::put('/usuarios/{id}', [UsuarioController::class, 'update']);
+
+    Route::put('/usuarios/{id}/estado', [UsuarioController::class, 'cambiarEstado']);
+    });
 
 Route::get('/dashboard', function () {
     return view('dashboard');

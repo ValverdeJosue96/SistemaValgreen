@@ -154,7 +154,7 @@
                 📝 Pedidos
             </a>
 
-            <a href="#"
+            <a href="/usuarios"
                class="nav-link">
                 👥 Usuarios
             </a>
