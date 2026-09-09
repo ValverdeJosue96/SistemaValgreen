@@ -5,6 +5,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\VentaController;
+use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\ClienteController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,7 +32,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/ventas/create', [VentaController::class, 'create']);
     Route::post('/ventas', [VentaController::class, 'store']);
 
-    });
+    Route::get('/pedidos', [PedidoController::class, 'index']);
+    Route::get('/pedidos/create', [PedidoController::class, 'create']);
+    Route::post('/pedidos', [PedidoController::class, 'store']);
+    
+    Route::get('/clientes', [ClienteController::class, 'index']);
+    Route::get('/clientes/create', [ClienteController::class, 'create']);
+    Route::post('/clientes', [ClienteController::class, 'store']);
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

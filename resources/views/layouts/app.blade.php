@@ -149,7 +149,7 @@
                 💰 Ventas
             </a>
 
-            <a href="#"
+            <a href="/pedidos"
                class="nav-link">
                 📝 Pedidos
             </a>
