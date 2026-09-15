@@ -4,48 +4,71 @@
 
 @section('content')
 
+
+<!-- ==========================================
+     ENCABEZADO
+========================================== -->
+
 <div class="d-flex justify-content-between align-items-center mb-4">
 
     <div>
-        <h2 class="fw-bold mb-1">
+
+        <h2 class="page-title mb-1">
             👑 Dashboard Administrador
         </h2>
 
         <p class="text-muted mb-0">
-            Bienvenido, {{ auth()->user()->nombres }}
+
+            Bienvenido, {{ auth()->user()->nombres }} 👋
+
         </p>
+
     </div>
 
-    <span class="badge bg-success fs-6">
+
+    <span class="badge bg-success px-3 py-2">
+
         Administrador
+
     </span>
 
 </div>
 
 
-<!-- TARJETAS PRINCIPALES -->
+
+<!-- ==========================================
+     INDICADORES
+========================================== -->
 
 <div class="row g-4 mb-4">
 
-    <div class="col-md-3">
 
-        <div class="card dashboard-card shadow-sm h-100">
+    <!-- VENTAS -->
 
-            <div class="card-body">
+    <div class="col-xl-3 col-md-6">
 
-                <div class="d-flex justify-content-between">
+        <div class="dashboard-card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-start">
 
                     <div>
-                        <p class="text-muted mb-1">
-                            Ventas de hoy
-                        </p>
 
-                        <h3 class="fw-bold">
+                        <div class="stat-title">
+                            Ventas de hoy
+                        </div>
+
+                        <div class="stat-number">
+
                             Bs. {{ number_format($ventasHoy, 2) }}
-                        </h3>
+
+                        </div>
+
                     </div>
 
-                    <div class="fs-1">
+
+                    <div class="stat-icon">
                         💰
                     </div>
 
@@ -58,27 +81,33 @@
     </div>
 
 
-    <div class="col-md-3">
 
-        <div class="card dashboard-card shadow-sm h-100">
+    <!-- PEDIDOS -->
 
-            <div class="card-body">
+    <div class="col-xl-3 col-md-6">
 
-                <div class="d-flex justify-content-between">
+        <div class="dashboard-card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-start">
 
                     <div>
 
-                        <p class="text-muted mb-1">
+                        <div class="stat-title">
                             Pedidos activos
-                        </p>
+                        </div>
 
-                        <h3 class="fw-bold">
+                        <div class="stat-number">
+
                             {{ $pedidosActivos }}
-                        </h3>
+
+                        </div>
 
                     </div>
 
-                    <div class="fs-1">
+
+                    <div class="stat-icon">
                         📝
                     </div>
 
@@ -91,27 +120,33 @@
     </div>
 
 
-    <div class="col-md-3">
 
-        <div class="card dashboard-card shadow-sm h-100">
+    <!-- USUARIOS -->
 
-            <div class="card-body">
+    <div class="col-xl-3 col-md-6">
 
-                <div class="d-flex justify-content-between">
+        <div class="dashboard-card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-start">
 
                     <div>
 
-                        <p class="text-muted mb-1">
+                        <div class="stat-title">
                             Usuarios activos
-                        </p>
+                        </div>
 
-                        <h3 class="fw-bold">
+                        <div class="stat-number">
+
                             {{ $usuariosActivos }}
-                        </h3>
+
+                        </div>
 
                     </div>
 
-                    <div class="fs-1">
+
+                    <div class="stat-icon">
                         👥
                     </div>
 
@@ -124,27 +159,33 @@
     </div>
 
 
-    <div class="col-md-3">
 
-        <div class="card dashboard-card shadow-sm h-100">
+    <!-- STOCK -->
 
-            <div class="card-body">
+    <div class="col-xl-3 col-md-6">
 
-                <div class="d-flex justify-content-between">
+        <div class="dashboard-card h-100">
+
+            <div class="card-body p-4">
+
+                <div class="d-flex justify-content-between align-items-start">
 
                     <div>
 
-                        <p class="text-muted mb-1">
+                        <div class="stat-title">
                             Stock bajo
-                        </p>
+                        </div>
 
-                        <h3 class="fw-bold">
+                        <div class="stat-number">
+
                             {{ $stockBajo }}
-                        </h3>
+
+                        </div>
 
                     </div>
 
-                    <div class="fs-1">
+
+                    <div class="stat-icon">
                         ⚠️
                     </div>
 
@@ -159,112 +200,194 @@
 </div>
 
 
-<!-- SEGUNDA SECCIÓN -->
+
+<!-- ==========================================
+     PEDIDOS + ACCIONES
+========================================== -->
 
 <div class="row g-4">
 
 
     <!-- PEDIDOS DE HOY -->
 
-    <div class="col-lg-7">
+    <div class="col-lg-8">
 
-        <div class="card shadow-sm border-0">
+        <div class="section-card h-100">
 
-            <div class="card-header bg-white">
 
-                <h5 class="mb-0 fw-bold">
+            <div class="section-header d-flex justify-content-between align-items-center">
+
+                <h5>
                     📅 Pedidos para hoy
                 </h5>
 
+                <a href="/pedidos"
+                   class="btn btn-sm btn-outline-success">
+
+                    Ver todos
+
+                </a>
+
             </div>
 
-            <div class="card-body">
+
+            <div class="card-body p-0">
+
 
                 @if($pedidosHoy->count() > 0)
 
-    <div class="table-responsive">
 
-        <table class="table align-middle">
+                    <div class="table-responsive">
 
-            <thead>
+                        <table class="table mb-0">
 
-                <tr>
-                    <th>Pedido</th>
-                    <th>Cliente</th>
-                    <th>Entrega</th>
-                    <th>Estado</th>
-                    <th></th>
-                </tr>
+                            <thead>
 
-            </thead>
+                                <tr>
 
-            <tbody>
+                                    <th class="ps-4">
+                                        Pedido
+                                    </th>
 
-                @foreach($pedidosHoy as $pedido)
+                                    <th>
+                                        Cliente
+                                    </th>
 
-                    <tr>
+                                    <th>
+                                        Hora
+                                    </th>
 
-                        <td>
-                            <strong>
-                                #{{ $pedido->id }}
-                            </strong>
-                        </td>
+                                    <th>
+                                        Estado
+                                    </th>
 
-                        <td>
-                            {{ $pedido->cliente->nombres }}
-                            {{ $pedido->cliente->primerApellido }}
-                        </td>
+                                    <th>
+                                    </th>
 
-                        <td>
-                            {{ $pedido->fecha_entrega->format('H:i') }}
-                        </td>
+                                </tr>
 
-                        <td>
+                            </thead>
 
-                            <span class="badge bg-success">
 
-                                {{ $pedido->estadoPedido->nombre }}
+                            <tbody>
 
-                            </span>
 
-                        </td>
+                                @foreach($pedidosHoy as $pedido)
 
-                        <td>
 
-                            <a href="/pedidos/{{ $pedido->id }}"
-                               class="btn btn-sm btn-outline-success">
+                                    <tr>
 
-                                Ver
+                                        <td class="ps-4">
 
-                            </a>
+                                            <strong>
+                                                #{{ $pedido->id }}
+                                            </strong>
 
-                        </td>
+                                        </td>
 
-                    </tr>
 
-                @endforeach
+                                        <td>
 
-            </tbody>
+                                            {{ $pedido->cliente->nombres }}
 
-        </table>
+                                            {{ $pedido->cliente->primer_apellido }}
 
-    </div>
+                                        </td>
 
-@else
 
-    <div class="text-center text-muted py-5">
+                                        <td>
 
-        <div class="fs-1 mb-2">
-            📋
-        </div>
+                                            {{ $pedido->fecha_entrega->format('H:i') }}
 
-        <p class="mb-0">
-            No hay pedidos para hoy.
-        </p>
+                                        </td>
 
-    </div>
 
-@endif
+                                        <td>
+
+
+                                            @if($pedido->estadoPedido->nombre === 'Pendiente')
+
+                                                <span class="badge estado-pendiente">
+                                                    Pendiente
+                                                </span>
+
+
+                                            @elseif($pedido->estadoPedido->nombre === 'En preparación')
+
+                                                <span class="badge estado-preparacion">
+                                                    En preparación
+                                                </span>
+
+
+                                            @elseif($pedido->estadoPedido->nombre === 'Listo')
+
+                                                <span class="badge estado-listo">
+                                                    Listo
+                                                </span>
+
+
+                                            @elseif($pedido->estadoPedido->nombre === 'Entregado')
+
+                                                <span class="badge estado-entregado">
+                                                    Entregado
+                                                </span>
+
+
+                                            @else
+
+                                                <span class="badge estado-cancelado">
+                                                    Cancelado
+                                                </span>
+
+                                            @endif
+
+
+                                        </td>
+
+
+                                        <td>
+
+                                            <a href="/pedidos/{{ $pedido->id }}"
+                                               class="btn btn-sm btn-outline-success">
+
+                                                Ver
+
+                                            </a>
+
+                                        </td>
+
+
+                                    </tr>
+
+
+                                @endforeach
+
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+
+                @else
+
+
+                    <div class="text-center text-muted py-5">
+
+                        <div class="fs-1 mb-2">
+                            📋
+                        </div>
+
+                        <p class="mb-0">
+                            No hay pedidos para hoy.
+                        </p>
+
+                    </div>
+
+
+                @endif
+
 
             </div>
 
@@ -273,43 +396,115 @@
     </div>
 
 
-    <!-- ACCIONES -->
 
-    <div class="col-lg-5">
+    <!-- ACCIONES RÁPIDAS -->
 
-        <div class="card shadow-sm border-0">
+    <div class="col-lg-4">
 
-            <div class="card-header bg-white">
+        <div class="section-card h-100">
 
-                <h5 class="mb-0 fw-bold">
+
+            <div class="section-header">
+
+                <h5>
                     ⚡ Acciones rápidas
                 </h5>
 
             </div>
 
+
             <div class="card-body">
 
-                <div class="d-grid gap-2">
+                <div class="row g-3">
 
-                    <a href="/ventas/create"
-                       class="btn btn-valgreen">
-                        💰 Registrar venta
-                    </a>
 
-                    <a href="/pedidos/create"
-                       class="btn btn-outline-success">
-                        📝 Registrar pedido
-                    </a>
+                    <div class="col-6">
 
-                    <a href="/productos/create"
-                       class="btn btn-outline-success">
-                        📦 Registrar producto
-                    </a>
+                        <a href="/ventas/create"
+                           class="quick-action text-center">
 
-                    <a href="/usuarios/create"
-                       class="btn btn-outline-success">
-                        👥 Registrar usuario
-                    </a>
+                            <div class="quick-action-icon">
+                                🛒
+                            </div>
+
+                            <div class="quick-action-title">
+                                Nueva venta
+                            </div>
+
+                            <div class="quick-action-text">
+                                Registrar venta
+                            </div>
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="col-6">
+
+                        <a href="/pedidos/create"
+                           class="quick-action text-center">
+
+                            <div class="quick-action-icon">
+                                📝
+                            </div>
+
+                            <div class="quick-action-title">
+                                Nuevo pedido
+                            </div>
+
+                            <div class="quick-action-text">
+                                Registrar pedido
+                            </div>
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="col-6">
+
+                        <a href="/productos/create"
+                           class="quick-action text-center">
+
+                            <div class="quick-action-icon">
+                                📦
+                            </div>
+
+                            <div class="quick-action-title">
+                                Producto
+                            </div>
+
+                            <div class="quick-action-text">
+                                Agregar producto
+                            </div>
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="col-6">
+
+                        <a href="/usuarios/create"
+                           class="quick-action text-center">
+
+                            <div class="quick-action-icon">
+                                👥
+                            </div>
+
+                            <div class="quick-action-title">
+                                Usuario
+                            </div>
+
+                            <div class="quick-action-text">
+                                Agregar usuario
+                            </div>
+
+                        </a>
+
+                    </div>
+
 
                 </div>
 
@@ -321,57 +516,88 @@
 
 </div>
 
-<!-- PRODUCTOS CON STOCK BAJO -->
 
-<div class="card shadow-sm border-0 mt-4">
 
-    <div class="card-header bg-white">
+<!-- ==========================================
+     STOCK BAJO
+========================================== -->
 
-        <h5 class="mb-0 fw-bold">
+<div class="section-card mt-4">
+
+
+    <div class="section-header d-flex justify-content-between align-items-center">
+
+        <h5>
             ⚠️ Productos con stock bajo
         </h5>
 
+        <a href="/stock"
+           class="btn btn-sm btn-outline-success">
+
+            Ver stock
+
+        </a>
+
     </div>
+
 
     <div class="card-body">
 
+
         @if($productosStockBajo->count() > 0)
+
 
             <div class="table-responsive">
 
-                <table class="table align-middle">
+                <table class="table mb-0">
 
                     <thead>
 
                         <tr>
 
-                            <th>Producto</th>
-                            <th>Stock</th>
-                            <th>Estado</th>
+                            <th>
+                                Producto
+                            </th>
+
+                            <th>
+                                Cantidad
+                            </th>
+
+                            <th>
+                                Estado
+                            </th>
 
                         </tr>
 
                     </thead>
 
+
                     <tbody>
 
+
                         @foreach($productosStockBajo as $item)
+
 
                             <tr>
 
                                 <td>
-                                    {{ $item->producto->nombre }}
-                                </td>
-
-                                <td>
 
                                     <strong>
-                                        {{ $item->cantidad }}
+                                        {{ $item->producto->nombre }}
                                     </strong>
 
                                 </td>
 
+
                                 <td>
+
+                                    {{ $item->cantidad }}
+
+                                </td>
+
+
+                                <td>
+
 
                                     @if($item->cantidad == 0)
 
@@ -387,11 +613,14 @@
 
                                     @endif
 
+
                                 </td>
 
                             </tr>
 
+
                         @endforeach
+
 
                     </tbody>
 
@@ -399,7 +628,9 @@
 
             </div>
 
+
         @else
+
 
             <div class="text-center text-muted py-4">
 
@@ -413,29 +644,13 @@
 
             </div>
 
+
         @endif
 
-    </div>
-
-</div>
-
-<!-- INFORMACIÓN -->
-
-<div class="card shadow-sm border-0 mt-4">
-
-    <div class="card-body">
-
-        <h5 class="fw-bold">
-            📊 Resumen del sistema
-        </h5>
-
-        <p class="text-muted mb-0">
-            Desde este panel puedes supervisar las ventas,
-            pedidos, productos, stock y usuarios de Valgreen.
-        </p>
 
     </div>
 
 </div>
+
 
 @endsection
