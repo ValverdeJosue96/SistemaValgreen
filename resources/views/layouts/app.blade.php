@@ -129,38 +129,70 @@
 
         <nav class="nav flex-column">
 
-            <a href="/dashboard"
-               class="nav-link">
-                🏠 Dashboard
-            </a>
+    <a href="/dashboard"
+       class="nav-link">
+        🏠 Dashboard
+    </a>
 
-            <a href="/productos"
-               class="nav-link">
-                📦 Productos
-            </a>
 
-            <a href="/stock"
-               class="nav-link">
-                📊 Stock
-            </a>
+    @if(auth()->user()->rol && auth()->user()->rol->nombre === 'Administrador')
 
-            <a href="/ventas"
-               class="nav-link">
-                💰 Ventas
-            </a>
+        <a href="/productos"
+           class="nav-link">
+            📦 Productos
+        </a>
 
-            <a href="/pedidos"
-               class="nav-link">
-                📝 Pedidos
-            </a>
+        <a href="/stock"
+           class="nav-link">
+            📊 Stock
+        </a>
 
-            <a href="/usuarios"
-               class="nav-link">
-                👥 Usuarios
-            </a>
+        <a href="/ventas"
+           class="nav-link">
+            💰 Ventas
+        </a>
 
-        </nav>
+        <a href="/pedidos"
+           class="nav-link">
+            📝 Pedidos
+        </a>
 
+        <a href="/clientes"
+           class="nav-link">
+            👤 Clientes
+        </a>
+
+        <a href="/usuarios"
+           class="nav-link">
+            👥 Usuarios
+        </a>
+
+
+    @else
+
+        <a href="/ventas"
+           class="nav-link">
+            💰 Ventas
+        </a>
+
+        <a href="/pedidos"
+           class="nav-link">
+            📝 Pedidos
+        </a>
+
+        <a href="/clientes"
+           class="nav-link">
+            👤 Clientes
+        </a>
+
+        <a href="/stock"
+           class="nav-link">
+            📊 Consultar stock
+        </a>
+
+    @endif
+
+</nav>
 
         @auth
 

@@ -8,6 +8,7 @@ use App\Http\Controllers\VentaController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -58,6 +59,5 @@ Route::middleware('auth')->group(function () {
     Route::put('/usuarios/{id}/estado', [UsuarioController::class, 'cambiarEstado']);
     });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth');
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware('auth');
