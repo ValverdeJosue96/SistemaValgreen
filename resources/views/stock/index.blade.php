@@ -18,12 +18,11 @@
 
         </div>
 
-        <a href="/stock/create"
-           class="btn btn-valgreen">
-
-            + Registrar movimiento
-
-        </a>
+        @if(auth()->user()->rol && auth()->user()->rol->nombre === 'Administrador')
+            <a href="/stock/create" class="btn btn-success">
+                Registrar entrada
+            </a>
+        @endif
 
     </div>
 
