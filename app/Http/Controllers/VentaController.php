@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Venta;
 use App\Models\DetalleVenta;
 use App\Models\Producto;
+use App\Models\Categoria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -21,11 +22,19 @@ class VentaController extends Controller
 
     public function create()
     {
-        $productos = Producto::where('estado', 1)
-            ->with('stock')
+        // Categorías activas
+        $categorias = Categoria::where('estado', 1)
+            ->orderBy('nombre')
             ->get();
 
-        return view('ventas.create', compact('productos'));
+        // Productos activos pertenecientes a categorías activas
+        $productos = Producto::with('stock')
+            ->where('estado', 1)
+            ->whereIn('categoria_id', $categorias->pluck('id'))
+            ->orderBy('nombre')
+            ->get();
+
+        return view('ventas.create', compact('categorias', 'productos'));
     }
 
     public function store(Request $request)
