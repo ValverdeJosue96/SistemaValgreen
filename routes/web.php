@@ -64,6 +64,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/ventas', [VentaController::class, 'index']);
         Route::get('/ventas/create', [VentaController::class, 'create']);
         Route::post('/ventas', [VentaController::class, 'store']);
+        Route::get('/ventas/{id}', [VentaController::class, 'show']);
 
         // Pedidos
         Route::get('/pedidos', [PedidoController::class, 'index']);

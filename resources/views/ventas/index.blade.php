@@ -39,6 +39,7 @@
                         <th>Vendedor</th>
                         <th>Fecha</th>
                         <th>Total</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
 
                 </thead>
@@ -50,7 +51,9 @@
                         <tr>
 
                             <td>
-                                #{{ $venta->id }}
+                                <span class="fw-semibold">
+                                    #{{ $venta->id }}
+                                </span>
                             </td>
 
                             <td>
@@ -65,13 +68,24 @@
                                 Bs {{ number_format($venta->total, 2) }}
                             </td>
 
+                            <td class="text-center">
+
+                                <a href="/ventas/{{ $venta->id }}"
+                                   class="btn btn-sm btn-outline-success">
+
+                                    👁 Ver detalle
+
+                                </a>
+
+                            </td>
+
                         </tr>
 
                     @empty
 
                         <tr>
 
-                            <td colspan="4"
+                            <td colspan="5"
                                 class="text-center text-muted py-4">
 
                                 Todavía no existen ventas registradas.

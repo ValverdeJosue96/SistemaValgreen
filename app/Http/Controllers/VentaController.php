@@ -13,11 +13,25 @@ class VentaController extends Controller
 {
     public function index()
     {
-        $ventas = Venta::with('usuario')
+        $ventas = Venta::with([
+                'usuario',
+                'detalles.producto'
+            ])
             ->orderBy('id', 'desc')
             ->get();
 
         return view('ventas.index', compact('ventas'));
+    }
+
+    public function show($id)
+    {
+        $venta = Venta::with([
+                'usuario',
+                'detalles.producto'
+            ])
+            ->findOrFail($id);
+
+        return view('ventas.show', compact('venta'));
     }
 
     public function create()
@@ -38,96 +52,95 @@ class VentaController extends Controller
     }
 
     public function store(Request $request)
-{
-    $request->validate([
-        'productos' => 'required|array',
-    ]);
+    {
+        $request->validate([
+            'productos' => 'required|array',
+        ]);
 
-    $productosSeleccionados = collect($request->productos)
-        ->filter(function ($cantidad) {
-            return (int) $cantidad > 0;
-        });
+        $productosSeleccionados = collect($request->productos)
+            ->filter(function ($cantidad) {
+                return (int) $cantidad > 0;
+            });
 
-    if ($productosSeleccionados->isEmpty()) {
-        return back()
-            ->withErrors([
-                'productos' => 'Debe seleccionar al menos un producto.'
-            ])
-            ->withInput();
-    }
+        if ($productosSeleccionados->isEmpty()) {
+            return back()
+                ->withErrors([
+                    'productos' => 'Debe seleccionar al menos un producto.'
+                ])
+                ->withInput();
+        }
 
-    try {
+        try {
 
-        DB::transaction(function () use ($productosSeleccionados) {
+            DB::transaction(function () use ($productosSeleccionados) {
 
-            $total = 0;
-            $detalles = [];
+                $total = 0;
+                $detalles = [];
 
-            foreach ($productosSeleccionados as $productoId => $cantidad) {
+                foreach ($productosSeleccionados as $productoId => $cantidad) {
 
-                $cantidad = (int) $cantidad;
+                    $cantidad = (int) $cantidad;
 
-                $producto = Producto::with('stock')
-                    ->lockForUpdate()
-                    ->findOrFail($productoId);
+                    $producto = Producto::with('stock')
+                        ->lockForUpdate()
+                        ->findOrFail($productoId);
 
-                $stockActual = $producto->stock->cantidad ?? 0;
+                    $stockActual = $producto->stock->cantidad ?? 0;
 
-                if ($cantidad > $stockActual) {
+                    if ($cantidad > $stockActual) {
+                        throw new \Exception(
+                            "No hay suficiente stock para: {$producto->nombre}"
+                        );
+                    }
 
-                    throw new \Exception(
-                        "No hay suficiente stock para: {$producto->nombre}"
+                    $precio = $producto->precio;
+
+                    $subtotal = $precio * $cantidad;
+
+                    $total += $subtotal;
+
+                    $detalles[] = [
+                        'producto' => $producto,
+                        'cantidad' => $cantidad,
+                        'precio_unitario' => $precio,
+                        'subtotal' => $subtotal,
+                    ];
+                }
+
+                $venta = Venta::create([
+                    'usuario_id' => auth()->id() ?? 1,
+                    'fecha' => now(),
+                    'total' => $total,
+                ]);
+
+                foreach ($detalles as $detalle) {
+
+                    DetalleVenta::create([
+                        'venta_id' => $venta->id,
+                        'producto_id' => $detalle['producto']->id,
+                        'cantidad' => $detalle['cantidad'],
+                        'precio_unitario' => $detalle['precio_unitario'],
+                        'subtotal' => $detalle['subtotal'],
+                    ]);
+
+                    $detalle['producto']->stock->decrement(
+                        'cantidad',
+                        $detalle['cantidad']
                     );
                 }
 
-                $precio = $producto->precio;
+            });
 
-                $subtotal = $precio * $cantidad;
+        } catch (\Exception $e) {
 
-                $total += $subtotal;
+            return back()
+                ->withErrors([
+                    'venta' => $e->getMessage()
+                ])
+                ->withInput();
+        }
 
-                $detalles[] = [
-                    'producto' => $producto,
-                    'cantidad' => $cantidad,
-                    'precio_unitario' => $precio,
-                    'subtotal' => $subtotal,
-                ];
-            }
-
-            $venta = Venta::create([
-                'usuario_id' => auth()->id() ?? 1,
-                'fecha' => now(),
-                'total' => $total,
-            ]);
-
-            foreach ($detalles as $detalle) {
-
-                DetalleVenta::create([
-                    'venta_id' => $venta->id,
-                    'producto_id' => $detalle['producto']->id,
-                    'cantidad' => $detalle['cantidad'],
-                    'precio_unitario' => $detalle['precio_unitario'],
-                    'subtotal' => $detalle['subtotal'],
-                ]);
-
-                $detalle['producto']->stock->decrement(
-                    'cantidad',
-                    $detalle['cantidad']
-                );
-            }
-
-        });
-
-    } catch (\Exception $e) {
-
-        return back()
-            ->withErrors([
-                'venta' => $e->getMessage()
-            ])
-            ->withInput();
+        return redirect('/ventas')
+            ->with('success', 'Venta registrada correctamente.');
     }
-
-    return redirect('/ventas')
-        ->with('success', 'Venta registrada correctamente.');
-}
 }
