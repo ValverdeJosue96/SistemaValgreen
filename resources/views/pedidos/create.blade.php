@@ -39,72 +39,76 @@
 
 
 <form method="POST"
-      action="/pedidos">
+      action="/pedidos"
+      id="formPedido">
 
     @csrf
 
 
+    {{-- ============================================================= --}}
     {{-- INFORMACIÓN DEL CLIENTE --}}
+    {{-- ============================================================= --}}
 
     <div class="card shadow-sm border-0 mb-4">
 
         <div class="card-body">
 
-            <h5 class="fw-bold mb-3">
-                Información del pedido
+            <h5 class="fw-bold mb-1">
+                Información del cliente
             </h5>
+
+            <p class="text-muted small mb-4">
+                Busca al cliente por su carnet. Si ya está registrado,
+                se utilizarán sus datos. Si no existe, puedes registrarlo
+                desde este mismo formulario.
+            </p>
 
 
             <div class="row g-3">
 
+
+                {{-- CARNET --}}
+
                 <div class="col-md-8">
 
-                    <label class="form-label">
-                        Cliente
+                    <label class="form-label fw-semibold">
+                        Carnet de identidad
                     </label>
 
-                    <select name="cliente_id"
-                            class="form-select"
-                            required>
+                    <div class="input-group">
 
-                        <option value="">
-                            Seleccione un cliente
-                        </option>
+                        <input type="text"
+                               name="cliente[carnet]"
+                               id="clienteCarnet"
+                               class="form-control"
+                               value="{{ old('cliente.carnet') }}"
+                               maxlength="20"
+                               placeholder="Ingrese el carnet"
+                               required>
 
-                        @foreach($clientes as $cliente)
+                        <button type="button"
+                                class="btn btn-outline-success"
+                                id="btnBuscarCliente">
 
-                            <option value="{{ $cliente->id }}"
-                                {{ old('cliente_id') == $cliente->id ? 'selected' : '' }}>
+                            🔍 Buscar
 
-                                {{ $cliente->nombres }}
-                                {{ $cliente->primerApellido }}
-                                {{ $cliente->segundoApellido }}
-                                - CI: {{ $cliente->carnet }}
+                        </button>
 
-                            </option>
+                    </div>
 
-                        @endforeach
-
-                    </select>
-
-                </div>
-
-
-                <div class="col-md-4 d-flex align-items-end">
-
-                    <a href="/clientes/create"
-                        class="btn btn-outline-success w-100">
-
-                        + Registrar nuevo cliente
-
-                    </a>
+                    <small class="text-muted">
+                        El carnet se utiliza para evitar registrar
+                        dos veces al mismo cliente.
+                    </small>
 
                 </div>
 
 
-                <div class="col-md-6">
+                {{-- FECHA DE ENTREGA --}}
 
-                    <label class="form-label">
+                <div class="col-md-4">
+
+                    <label class="form-label fw-semibold">
                         Fecha y hora de entrega
                     </label>
 
@@ -116,6 +120,100 @@
 
                 </div>
 
+
+                {{-- MENSAJE DE ESTADO --}}
+
+                <div class="col-12">
+
+                    <div id="mensajeCliente"
+                         class="alert alert-secondary py-2 mb-0">
+
+                        Ingresa un carnet y presiona
+                        <strong>Buscar</strong>.
+
+                    </div>
+
+                </div>
+
+
+                {{-- NOMBRES --}}
+
+                <div class="col-md-6">
+
+                    <label class="form-label fw-semibold">
+                        Nombres
+                    </label>
+
+                    <input type="text"
+                           name="cliente[nombres]"
+                           id="clienteNombres"
+                           class="form-control"
+                           value="{{ old('cliente.nombres') }}"
+                           maxlength="100"
+                           placeholder="Nombres">
+
+                </div>
+
+
+                {{-- PRIMER APELLIDO --}}
+
+                <div class="col-md-6">
+
+                    <label class="form-label fw-semibold">
+                        Primer apellido
+                    </label>
+
+                    <input type="text"
+                           name="cliente[primer_apellido]"
+                           id="clientePrimerApellido"
+                           class="form-control"
+                           value="{{ old('cliente.primer_apellido') }}"
+                           maxlength="50"
+                           placeholder="Primer apellido">
+
+                </div>
+
+
+                {{-- SEGUNDO APELLIDO --}}
+
+                <div class="col-md-6">
+
+                    <label class="form-label fw-semibold">
+                        Segundo apellido
+                        <span class="text-muted fw-normal">
+                            (opcional)
+                        </span>
+                    </label>
+
+                    <input type="text"
+                           name="cliente[segundo_apellido]"
+                           id="clienteSegundoApellido"
+                           class="form-control"
+                           value="{{ old('cliente.segundo_apellido') }}"
+                           maxlength="50"
+                           placeholder="Segundo apellido">
+
+                </div>
+
+
+                {{-- TELÉFONO --}}
+
+                <div class="col-md-6">
+
+                    <label class="form-label fw-semibold">
+                        Teléfono
+                    </label>
+
+                    <input type="text"
+                           name="cliente[telefono]"
+                           id="clienteTelefono"
+                           class="form-control"
+                           value="{{ old('cliente.telefono') }}"
+                           maxlength="20"
+                           placeholder="Número de teléfono">
+
+                </div>
+
             </div>
 
         </div>
@@ -124,7 +222,9 @@
 
 
 
+    {{-- ============================================================= --}}
     {{-- PRODUCTOS --}}
+    {{-- ============================================================= --}}
 
     <div class="card shadow-sm border-0 mb-4">
 
@@ -150,9 +250,13 @@
 
                         <tr>
 
-                            <th>Producto</th>
+                            <th>
+                                Producto
+                            </th>
 
-                            <th>Precio</th>
+                            <th>
+                                Precio
+                            </th>
 
                             <th style="width: 150px;">
                                 Cantidad
@@ -192,7 +296,8 @@
 
                                 <td>
 
-                                    Bs {{ number_format($producto->precio, 2) }}
+                                    Bs
+                                    {{ number_format($producto->precio, 2) }}
 
                                 </td>
 
@@ -236,7 +341,9 @@
 
 
 
+    {{-- ============================================================= --}}
     {{-- TORTA PERSONALIZADA --}}
+    {{-- ============================================================= --}}
 
     <div class="card shadow-sm border-0 mb-4">
 
@@ -255,6 +362,7 @@
 
 
             <div class="row g-3">
+
 
                 <div class="col-md-4">
 
@@ -378,7 +486,9 @@
 
 
 
+    {{-- ============================================================= --}}
     {{-- PAGO --}}
+    {{-- ============================================================= --}}
 
     <div class="card shadow-sm border-0 mb-4">
 
@@ -390,6 +500,7 @@
 
 
             <div class="row g-3">
+
 
                 <div class="col-md-6">
 
@@ -436,7 +547,9 @@
 
 
 
+    {{-- ============================================================= --}}
     {{-- BOTONES --}}
+    {{-- ============================================================= --}}
 
     <div class="d-flex justify-content-end gap-2">
 
@@ -458,5 +571,223 @@
     </div>
 
 </form>
+
+
+{{-- ============================================================= --}}
+{{-- JAVASCRIPT PARA BUSCAR CLIENTES --}}
+{{-- ============================================================= --}}
+
+<script>
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    /*
+     * Clientes existentes enviados desde Laravel.
+     *
+     * Esto solamente sirve para facilitar la búsqueda
+     * desde el formulario.
+     *
+     * El controlador vuelve a comprobar el carnet
+     * antes de guardar.
+     */
+    const clientes = @json($clientes);
+
+
+    const carnetInput =
+        document.getElementById('clienteCarnet');
+
+    const nombresInput =
+        document.getElementById('clienteNombres');
+
+    const primerApellidoInput =
+        document.getElementById('clientePrimerApellido');
+
+    const segundoApellidoInput =
+        document.getElementById('clienteSegundoApellido');
+
+    const telefonoInput =
+        document.getElementById('clienteTelefono');
+
+    const buscarButton =
+        document.getElementById('btnBuscarCliente');
+
+    const mensaje =
+        document.getElementById('mensajeCliente');
+
+
+    /*
+     * Campos personales del cliente.
+     */
+    const camposCliente = [
+
+        nombresInput,
+        primerApellidoInput,
+        segundoApellidoInput,
+        telefonoInput
+
+    ];
+
+
+    /*
+     * Configurar campos cuando encontramos
+     * un cliente existente.
+     */
+    function mostrarClienteExistente(cliente) {
+
+        nombresInput.value =
+            cliente.nombres ?? '';
+
+        primerApellidoInput.value =
+            cliente.primer_apellido ?? '';
+
+        segundoApellidoInput.value =
+            cliente.segundo_apellido ?? '';
+
+        telefonoInput.value =
+            cliente.telefono ?? '';
+
+
+        /*
+         * Como el cliente ya existe,
+         * no queremos modificar sus datos
+         * desde el pedido.
+         */
+        camposCliente.forEach(function (campo) {
+
+            campo.readOnly = true;
+            campo.required = false;
+
+        });
+
+
+        mensaje.className =
+            'alert alert-success py-2 mb-0';
+
+        mensaje.innerHTML =
+            '✓ <strong>Cliente encontrado.</strong> ' +
+            'Se utilizarán los datos registrados para este carnet. ' +
+            'No se creará un cliente nuevo.';
+
+    }
+
+
+    /*
+     * Configurar campos para un cliente nuevo.
+     */
+    function prepararClienteNuevo() {
+
+        camposCliente.forEach(function (campo) {
+
+            campo.readOnly = false;
+            campo.required = true;
+
+        });
+
+
+        mensaje.className =
+            'alert alert-info py-2 mb-0';
+
+        mensaje.innerHTML =
+            'ℹ <strong>Cliente nuevo.</strong> ' +
+            'Completa sus datos para registrarlo junto con el pedido.';
+
+    }
+
+
+    /*
+     * Buscar cliente por carnet.
+     */
+    function buscarCliente() {
+
+        const carnet =
+            carnetInput.value.trim();
+
+
+        if (!carnet) {
+
+            mensaje.className =
+                'alert alert-warning py-2 mb-0';
+
+            mensaje.innerHTML =
+                'Debes ingresar un carnet para buscar al cliente.';
+
+            return;
+
+        }
+
+
+        const clienteEncontrado =
+            clientes.find(function (cliente) {
+
+                return String(cliente.carnet).trim() === carnet;
+
+            });
+
+
+        if (clienteEncontrado) {
+
+            mostrarClienteExistente(
+                clienteEncontrado
+            );
+
+        } else {
+
+            prepararClienteNuevo();
+
+        }
+
+    }
+
+
+    /*
+     * Botón Buscar.
+     */
+    buscarButton.addEventListener(
+        'click',
+        buscarCliente
+    );
+
+
+    /*
+     * Si el usuario cambia el carnet después
+     * de haber encontrado un cliente,
+     * volvemos a habilitar los campos.
+     */
+    carnetInput.addEventListener(
+        'input',
+        function () {
+
+            camposCliente.forEach(function (campo) {
+
+                campo.readOnly = false;
+                campo.required = false;
+
+            });
+
+
+            mensaje.className =
+                'alert alert-secondary py-2 mb-0';
+
+            mensaje.innerHTML =
+                'Presiona <strong>Buscar</strong> ' +
+                'para comprobar si el carnet ya está registrado.';
+
+        }
+    );
+
+
+    /*
+     * Si Laravel devolvió el formulario por un error,
+     * intentamos buscar automáticamente el carnet.
+     */
+    if (carnetInput.value.trim() !== '') {
+
+        buscarCliente();
+
+    }
+
+});
+
+</script>
 
 @endsection
