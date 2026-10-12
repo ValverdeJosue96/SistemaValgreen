@@ -8,6 +8,7 @@
 
     <div>
         <h1 class="fw-bold mb-1">Editar usuario</h1>
+
         <p class="text-muted mb-0">
             Modificar información del usuario
         </p>
@@ -26,7 +27,9 @@
         <ul class="mb-0">
 
             @foreach($errors->all() as $error)
+
                 <li>{{ $error }}</li>
+
             @endforeach
 
         </ul>
@@ -53,11 +56,13 @@
                         Nombres
                     </label>
 
-                    <input type="text"
-                           name="nombres"
-                           class="form-control"
-                           value="{{ old('nombres', $usuario->nombres) }}"
-                           required>
+                    <input
+                        type="text"
+                        name="nombres"
+                        class="form-control"
+                        value="{{ old('nombres', $usuario->nombres) }}"
+                        required
+                    >
 
                 </div>
 
@@ -67,11 +72,13 @@
                         Primer apellido
                     </label>
 
-                    <input type="text"
-                           name="primer_apellido"
-                           class="form-control"
-                           value="{{ old('primer_apellido', $usuario->primer_apellido) }}"
-                           required>
+                    <input
+                        type="text"
+                        name="primer_apellido"
+                        class="form-control"
+                        value="{{ old('primer_apellido', $usuario->primer_apellido) }}"
+                        required
+                    >
 
                 </div>
 
@@ -81,11 +88,13 @@
                         Segundo apellido
                     </label>
 
-                    <input type="text"
-                           name="segundo_apellido"
-                           class="form-control"
-                           value="{{ old('segundo_apellido', $usuario->segundo_apellido) }}"
-                           required>
+                    <input
+                        type="text"
+                        name="segundo_apellido"
+                        class="form-control"
+                        value="{{ old('segundo_apellido', $usuario->segundo_apellido) }}"
+                        required
+                    >
 
                 </div>
 
@@ -95,11 +104,13 @@
                         Carnet
                     </label>
 
-                    <input type="text"
-                           name="carnet"
-                           class="form-control"
-                           value="{{ old('carnet', $usuario->carnet) }}"
-                           required>
+                    <input
+                        type="text"
+                        name="carnet"
+                        class="form-control"
+                        value="{{ old('carnet', $usuario->carnet) }}"
+                        required
+                    >
 
                 </div>
 
@@ -109,10 +120,12 @@
                         Teléfono
                     </label>
 
-                    <input type="text"
-                           name="telefono"
-                           class="form-control"
-                           value="{{ old('telefono', $usuario->telefono) }}">
+                    <input
+                        type="text"
+                        name="telefono"
+                        class="form-control"
+                        value="{{ old('telefono', $usuario->telefono) }}"
+                    >
 
                 </div>
 
@@ -122,17 +135,19 @@
                         Rol
                     </label>
 
-                    <select name="rol_id"
-                            class="form-select"
-                            required>
+                    <select
+                        name="rol_id"
+                        class="form-select"
+                        required
+                    >
 
                         @foreach($roles as $rol)
 
-                            <option value="{{ $rol->id }}"
-                                {{ $usuario->rol_id == $rol->id ? 'selected' : '' }}>
-
+                            <option
+                                value="{{ $rol->id }}"
+                                {{ $usuario->rol_id == $rol->id ? 'selected' : '' }}
+                            >
                                 {{ $rol->nombre }}
-
                             </option>
 
                         @endforeach
@@ -141,19 +156,26 @@
 
                 </div>
 
+                {{-- CORREO ELECTRÓNICO --}}
+
                 <div class="col-md-6">
 
                     <label class="form-label">
-                        Usuario
+                        Correo electrónico
                     </label>
 
-                    <input type="text"
-                           name="usuario"
-                           class="form-control"
-                           value="{{ old('usuario', $usuario->usuario) }}"
-                           required>
+                    <input
+                        type="email"
+                        name="email"
+                        class="form-control"
+                        value="{{ old('email', $usuario->email) }}"
+                        placeholder="ejemplo@correo.com"
+                        required
+                    >
 
                 </div>
+
+                {{-- NUEVA CONTRASEÑA --}}
 
                 <div class="col-md-3">
 
@@ -161,9 +183,11 @@
                         Nueva contraseña
                     </label>
 
-                    <input type="password"
-                           name="password"
-                           class="form-control">
+                    <input
+                        type="password"
+                        name="password"
+                        class="form-control"
+                    >
 
                     <small class="text-muted">
                         Déjala vacía para conservar la actual.
@@ -171,15 +195,19 @@
 
                 </div>
 
+                {{-- CONFIRMAR CONTRASEÑA --}}
+
                 <div class="col-md-3">
 
                     <label class="form-label">
                         Confirmar contraseña
                     </label>
 
-                    <input type="password"
-                           name="password_confirmation"
-                           class="form-control">
+                    <input
+                        type="password"
+                        name="password_confirmation"
+                        class="form-control"
+                    >
 
                 </div>
 
@@ -189,13 +217,17 @@
 
             <div class="d-flex justify-content-end gap-2">
 
-                <a href="/usuarios"
-                   class="btn btn-secondary">
+                <a
+                    href="/usuarios"
+                    class="btn btn-secondary"
+                >
                     Cancelar
                 </a>
 
-                <button type="submit"
-                        class="btn btn-valgreen">
+                <button
+                    type="submit"
+                    class="btn btn-valgreen"
+                >
                     Guardar cambios
                 </button>
 

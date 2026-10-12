@@ -17,17 +17,18 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $credenciales = $request->validate([
-            'usuario' => 'required',
+            'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        $usuario = User::where('usuario', $credenciales['usuario'])
+        $usuario = User::where('email', $credenciales['email'])
             ->where('estado', 1)
             ->first();
 
         if (!$usuario || !Hash::check($credenciales['password'], $usuario->password)) {
+
             return back()->withErrors([
-                'usuario' => 'Usuario o contraseña incorrectos.'
+                'email' => 'Correo electrónico o contraseña incorrectos.'
             ])->withInput();
         }
 

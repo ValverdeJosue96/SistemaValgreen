@@ -1,10 +1,5 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Login - Valgreen</title>
-<!DOCTYPE html>
-<html lang="es">
 
 <head>
 
@@ -30,6 +25,7 @@
 
         body {
             min-height: 100vh;
+
             background: linear-gradient(
                 135deg,
                 #eaf3ed,
@@ -51,6 +47,7 @@
         .logo {
             width: 75px;
             height: 75px;
+
             margin: 0 auto 15px;
 
             display: flex;
@@ -74,7 +71,9 @@
             background-color: var(--valgreen);
             color: white;
             border: none;
+
             padding: 11px;
+
             font-weight: 600;
         }
 
@@ -89,7 +88,10 @@
 
         .form-control:focus {
             border-color: var(--valgreen);
-            box-shadow: 0 0 0 0.2rem rgba(36, 92, 53, 0.15);
+
+            box-shadow:
+                0 0 0 0.2rem
+                rgba(36, 92, 53, 0.15);
         }
 
         .login-footer {
@@ -101,7 +103,6 @@
 
 </head>
 
-
 <body>
 
 <div class="container login-container
@@ -111,7 +112,6 @@
     <div class="card login-card shadow-lg">
 
         <div class="card-body p-4 p-md-5">
-
 
             <!-- LOGO -->
 
@@ -161,24 +161,24 @@
                 @csrf
 
 
-                <!-- USUARIO -->
+                <!-- CORREO ELECTRÓNICO -->
 
                 <div class="mb-3">
 
-                    <label for="usuario"
+                    <label for="email"
                            class="form-label fw-semibold">
 
-                        Usuario
+                        Correo electrónico
 
                     </label>
 
                     <input
-                        type="text"
-                        id="usuario"
-                        name="usuario"
+                        type="email"
+                        id="email"
+                        name="email"
                         class="form-control"
-                        value="{{ old('usuario') }}"
-                        placeholder="Ingrese su usuario"
+                        value="{{ old('email') }}"
+                        placeholder="Ingrese su correo electrónico"
                         required
                         autofocus
                     >
@@ -206,6 +206,12 @@
                         required
                     >
 
+                </div>
+
+                <div class="text-end mb-3">
+                    <a href="{{ route('password.request') }}">
+                        ¿Olvidaste tu contraseña?
+                    </a>
                 </div>
 
 
@@ -236,13 +242,11 @@
 
             </div>
 
-
         </div>
 
     </div>
 
 </div>
-
 
 </body>
 

@@ -26,7 +26,9 @@
         <ul class="mb-0">
 
             @foreach($errors->all() as $error)
+
                 <li>{{ $error }}</li>
+
             @endforeach
 
         </ul>
@@ -51,11 +53,13 @@
                         Nombres
                     </label>
 
-                    <input type="text"
-                           name="nombres"
-                           class="form-control"
-                           value="{{ old('nombres') }}"
-                           required>
+                    <input
+                        type="text"
+                        name="nombres"
+                        class="form-control"
+                        value="{{ old('nombres') }}"
+                        required
+                    >
 
                 </div>
 
@@ -65,11 +69,13 @@
                         Primer apellido
                     </label>
 
-                    <input type="text"
-                           name="primer_apellido"
-                           class="form-control"
-                           value="{{ old('primer_apellido') }}"
-                           required>
+                    <input
+                        type="text"
+                        name="primer_apellido"
+                        class="form-control"
+                        value="{{ old('primer_apellido') }}"
+                        required
+                    >
 
                 </div>
 
@@ -79,11 +85,13 @@
                         Segundo apellido
                     </label>
 
-                    <input type="text"
-                           name="segundo_apellido"
-                           class="form-control"
-                           value="{{ old('segundo_apellido') }}"
-                           required>
+                    <input
+                        type="text"
+                        name="segundo_apellido"
+                        class="form-control"
+                        value="{{ old('segundo_apellido') }}"
+                        required
+                    >
 
                 </div>
 
@@ -93,11 +101,13 @@
                         Carnet
                     </label>
 
-                    <input type="text"
-                           name="carnet"
-                           class="form-control"
-                           value="{{ old('carnet') }}"
-                           required>
+                    <input
+                        type="text"
+                        name="carnet"
+                        class="form-control"
+                        value="{{ old('carnet') }}"
+                        required
+                    >
 
                 </div>
 
@@ -107,10 +117,12 @@
                         Teléfono
                     </label>
 
-                    <input type="text"
-                           name="telefono"
-                           class="form-control"
-                           value="{{ old('telefono') }}">
+                    <input
+                        type="text"
+                        name="telefono"
+                        class="form-control"
+                        value="{{ old('telefono') }}"
+                    >
 
                 </div>
 
@@ -120,9 +132,11 @@
                         Rol
                     </label>
 
-                    <select name="rol_id"
-                            class="form-select"
-                            required>
+                    <select
+                        name="rol_id"
+                        class="form-select"
+                        required
+                    >
 
                         <option value="">
                             Seleccione un rol
@@ -130,11 +144,11 @@
 
                         @foreach($roles as $rol)
 
-                            <option value="{{ $rol->id }}"
-                                {{ old('rol_id') == $rol->id ? 'selected' : '' }}>
-
+                            <option
+                                value="{{ $rol->id }}"
+                                {{ old('rol_id') == $rol->id ? 'selected' : '' }}
+                            >
                                 {{ $rol->nombre }}
-
                             </option>
 
                         @endforeach
@@ -143,19 +157,26 @@
 
                 </div>
 
+                {{-- CORREO ELECTRÓNICO --}}
+
                 <div class="col-md-6">
 
                     <label class="form-label">
-                        Usuario
+                        Correo electrónico
                     </label>
 
-                    <input type="text"
-                           name="usuario"
-                           class="form-control"
-                           value="{{ old('usuario') }}"
-                           required>
+                    <input
+                        type="email"
+                        name="email"
+                        class="form-control"
+                        value="{{ old('email') }}"
+                        placeholder="ejemplo@correo.com"
+                        required
+                    >
 
                 </div>
+
+                {{-- CONTRASEÑA --}}
 
                 <div class="col-md-3">
 
@@ -163,10 +184,12 @@
                         Contraseña
                     </label>
 
-                    <input type="password"
-                           name="password"
-                           class="form-control"
-                           required>
+                    <input
+                        type="password"
+                        name="password"
+                        class="form-control"
+                        required
+                    >
 
                 </div>
 
@@ -176,10 +199,12 @@
                         Confirmar contraseña
                     </label>
 
-                    <input type="password"
-                           name="password_confirmation"
-                           class="form-control"
-                           required>
+                    <input
+                        type="password"
+                        name="password_confirmation"
+                        class="form-control"
+                        required
+                    >
 
                 </div>
 
@@ -189,13 +214,17 @@
 
             <div class="d-flex justify-content-end gap-2">
 
-                <a href="/usuarios"
-                   class="btn btn-secondary">
+                <a
+                    href="/usuarios"
+                    class="btn btn-secondary"
+                >
                     Cancelar
                 </a>
 
-                <button type="submit"
-                        class="btn btn-valgreen">
+                <button
+                    type="submit"
+                    class="btn btn-valgreen"
+                >
                     Registrar usuario
                 </button>
 

@@ -9,12 +9,13 @@ use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PasswordResetController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', [AuthController::class, 'mostrarLogin']);
+Route::get('/login', [AuthController::class, 'mostrarLogin'])->name('login');;
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
@@ -81,3 +82,15 @@ Route::middleware('auth')->group(function () {
     });
 
 });
+
+Route::get('/forgot-password', [PasswordResetController::class, 'mostrarFormulario'])
+    ->name('password.request');
+
+Route::post('/forgot-password', [PasswordResetController::class, 'enviarEnlace'])
+    ->name('password.email');
+
+Route::get('/reset-password/{token}', [PasswordResetController::class, 'mostrarFormularioReset'])
+    ->name('password.reset');
+
+Route::post('/reset-password', [PasswordResetController::class, 'restablecer'])
+    ->name('password.update');

@@ -34,7 +34,7 @@ class UsuarioController extends Controller
             'segundo_apellido' => 'required|string|max:50',
             'carnet' => 'required|string|max:20|unique:usuarios,carnet',
             'telefono' => 'nullable|string|max:20',
-            'usuario' => 'required|string|max:50|unique:usuarios,usuario',
+            'email' => 'required|email|max:150|unique:usuarios,email',
             'password' => 'required|string|min:6|confirmed',
         ]);
 
@@ -45,7 +45,7 @@ class UsuarioController extends Controller
             'segundo_apellido' => $request->segundo_apellido,
             'carnet' => $request->carnet,
             'telefono' => $request->telefono,
-            'usuario' => $request->usuario,
+            'email' => $request->email,
             'password' => Hash::make($request->password),
             'estado' => 1,
         ]);
@@ -76,7 +76,7 @@ class UsuarioController extends Controller
             'segundo_apellido' => 'required|string|max:50',
             'carnet' => 'required|string|max:20|unique:usuarios,carnet,' . $id,
             'telefono' => 'nullable|string|max:20',
-            'usuario' => 'required|string|max:50|unique:usuarios,usuario,' . $id,
+            'email' => 'required|email|max:150|unique:usuarios,email,' . $id,
             'password' => 'nullable|string|min:6|confirmed',
         ]);
 
@@ -87,7 +87,7 @@ class UsuarioController extends Controller
             'segundo_apellido' => $request->segundo_apellido,
             'carnet' => $request->carnet,
             'telefono' => $request->telefono,
-            'usuario' => $request->usuario,
+            'email' => $request->email,
         ];
 
         // Solo cambia la contraseña si se escribió una nueva.
