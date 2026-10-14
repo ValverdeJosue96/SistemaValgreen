@@ -9,8 +9,7 @@ object ApiService {
 
     // Dirección para pruebas con el emulador Android.
     // Cuando usemos el teléfono físico, cambiaremos esta dirección.
-    private const val BASE_URL =
-        "http://192.168.1.159:8000/api/productos"
+    private const val BASE_URL = "${ApiConfig.BASE_URL}/productos"
 
     fun obtenerProductos(): List<Producto> {
         val conexion = URL(BASE_URL)

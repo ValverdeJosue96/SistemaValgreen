@@ -12,7 +12,7 @@ data class LoginResult(
 
 object AuthService {
 
-    private const val BASE_URL ="http://192.168.1.159:8000/api/login"
+    private const val BASE_URL = "${ApiConfig.BASE_URL}/login"
 
     fun iniciarSesion(email: String, password: String): LoginResult {
         val conexion = URL(BASE_URL).openConnection() as HttpURLConnection
