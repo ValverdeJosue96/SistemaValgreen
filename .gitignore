@@ -25,3 +25,12 @@ _ide_helper.php
 Homestead.json
 Homestead.yaml
 Thumbs.db
+
+# Android Studio - ValgreenMovil
+Movil/.gradle/
+Movil/.idea/
+Movil/.kotlin/
+Movil/**/build/
+Movil/local.properties
+Movil/.externalNativeBuild/
+Movil/.cxx/
