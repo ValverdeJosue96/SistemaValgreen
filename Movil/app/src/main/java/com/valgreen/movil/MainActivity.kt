@@ -27,11 +27,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnVerPedidos.setOnClickListener {
-            Toast.makeText(
-                this,
-                "Aquí consultaremos los pedidos.",
-                Toast.LENGTH_SHORT
-            ).show()
+            startActivity(
+                android.content.Intent(this, PedidosActivity::class.java)
+            )
         }
     }
 }

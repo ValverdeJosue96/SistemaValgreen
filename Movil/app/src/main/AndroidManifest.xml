@@ -26,6 +26,10 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".PedidosActivity"
+            android:exported="false" />
+
         <!-- Pantalla de productos existente -->
         <activity
             android:name=".MainActivity"
