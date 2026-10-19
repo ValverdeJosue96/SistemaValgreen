@@ -246,8 +246,8 @@ class RegistrarPedidoActivity : AppCompatActivity() {
             .openConnection() as HttpURLConnection
 
         conexion.requestMethod = metodo
-        conexion.connectTimeout = 15000
-        conexion.readTimeout = 15000
+        conexion.connectTimeout = 20000
+        conexion.readTimeout = 30000
         conexion.setRequestProperty("Accept", "application/json")
 
         if (enviarToken) {

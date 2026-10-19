@@ -25,7 +25,10 @@ class PedidoApiController extends Controller
             'estadoPedido',
             'detalles.producto',
             'tortasPersonalizadas',
-        ])->orderByDesc('id')->get();
+        ])
+            ->orderByDesc('id')
+            ->limit(50)
+            ->get();
 
         return response()->json([
             'success' => true,
