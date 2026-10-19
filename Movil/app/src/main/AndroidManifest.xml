@@ -30,6 +30,10 @@
             android:name=".PedidosActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".RegistrarPedidoActivity"
+            android:exported="false" />
+
         <!-- Pantalla de productos existente -->
         <activity
             android:name=".MainActivity"

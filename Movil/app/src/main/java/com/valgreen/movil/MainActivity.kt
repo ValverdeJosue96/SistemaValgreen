@@ -19,11 +19,12 @@ class MainActivity : AppCompatActivity() {
         btnVerPedidos = findViewById(R.id.btnVerPedidos)
 
         btnRegistrarPedido.setOnClickListener {
-            Toast.makeText(
-                this,
-                "Aquí registraremos un nuevo pedido.",
-                Toast.LENGTH_SHORT
-            ).show()
+            startActivity(
+                android.content.Intent(
+                    this,
+                    RegistrarPedidoActivity::class.java
+                )
+            )
         }
 
         btnVerPedidos.setOnClickListener {
