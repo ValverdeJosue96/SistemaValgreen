@@ -2,6 +2,7 @@ package com.valgreen.movil
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -46,7 +47,6 @@ class LoginActivity : AppCompatActivity() {
                 val resultado = AuthService.iniciarSesion(email, password)
 
                 runOnUiThread {
-                    // Guardar los datos de sesión para usarlos en el menú.
                     getSharedPreferences("ValgreenSesion", MODE_PRIVATE)
                         .edit()
                         .putString("token", resultado.token)
@@ -57,8 +57,6 @@ class LoginActivity : AppCompatActivity() {
                     btnLogin.isEnabled = true
                     btnLogin.text = "INGRESAR"
 
-                    // Por ahora abre la pantalla de productos existente.
-                    // Después la conectaremos al menú principal.
                     startActivity(
                         Intent(this, MainActivity::class.java)
                     )
@@ -72,11 +70,7 @@ class LoginActivity : AppCompatActivity() {
                         e.message ?: "No se pudo conectar con el servidor."
                 }
 
-                android.util.Log.e(
-                    "Valgreen",
-                    "Error de inicio de sesión",
-                    e
-                )
+                Log.e("Valgreen", "Error de inicio de sesión", e)
             }
         }.start()
     }

@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="sage_green">#8FAF91</color>
+    <color name="sage_dark">#526F55</color>
+    <color name="sage_light">#E4EDE1</color>
+    <color name="cream">#FFF8ED</color>
+    <color name="white">#FFFFFF</color>
+    <color name="text_primary">#343D34</color>
+    <color name="text_secondary">#788078</color>
+    <color name="border_soft">#E6E3D8</color>
+    <color name="accent_peach">#E9B99D</color>
 </resources>
