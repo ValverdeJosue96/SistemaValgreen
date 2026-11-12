@@ -39,6 +39,10 @@
             android:name=".MainActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".DetallePedidoActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

@@ -529,37 +529,45 @@ class PedidoController extends Controller
     /**
      * Actualizar el estado de un pedido.
      */
-    public function actualizarEstado(
-        Request $request,
-        $id
-    ) {
-
+    
+    public function actualizarEstado(Request $request, $id)
+    {
         $request->validate([
-            'estado_pedido_id' =>
-                'required|exists:estados_pedido,id'
+            'estado_pedido_id' => 'required|exists:estados_pedido,id'
         ]);
-
 
         $pedido = Pedido::findOrFail($id);
 
+        // Buscar el estado al que se quiere cambiar el pedido.
+        $nuevoEstado = \App\Models\EstadoPedido::findOrFail(
+            $request->estado_pedido_id
+        );
+
+        // No permitir entregar si todavía existe saldo pendiente.
+        if (
+            $nuevoEstado->nombre === 'Entregado' &&
+            (float) $pedido->saldo > 0
+        ) {
+            return redirect('/pedidos/' . $pedido->id)
+                ->with(
+                    'error',
+                    'No se puede entregar el pedido. El cliente debe pagar el saldo pendiente de Bs ' .
+                    number_format((float) $pedido->saldo, 2, '.', '') . '.'
+                );
+        }
 
         $pedido->update([
-
-            'estado_pedido_id' =>
-                $request->estado_pedido_id,
-
-            'updated_by' =>
-                auth()->id() ?? 1
+            'estado_pedido_id' => $nuevoEstado->id,
+            'updated_by' => auth()->id() ?? 1
         ]);
 
-
-        return redirect(
-            '/pedidos/' . $pedido->id
-        )->with(
-            'success',
-            'Estado del pedido actualizado correctamente.'
-        );
+        return redirect('/pedidos/' . $pedido->id)
+            ->with(
+                'success',
+                'Estado del pedido actualizado correctamente.'
+            );
     }
+
 
 
     /**
