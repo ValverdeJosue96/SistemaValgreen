@@ -47,12 +47,12 @@ class Pedido extends Model
 
     public function creador()
     {
-        return $this->belongsTo(Usuario::class, 'created_by');
+        return $this->belongsTo(User::class, 'created_by');
     }
 
     public function actualizador()
     {
-        return $this->belongsTo(Usuario::class, 'updated_by');
+        return $this->belongsTo(User::class, 'updated_by');
     }
 
     public function detalles()

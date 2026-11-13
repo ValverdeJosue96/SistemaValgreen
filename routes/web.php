@@ -8,8 +8,10 @@ use App\Http\Controllers\VentaController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\UsuarioController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PasswordResetController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -49,6 +51,13 @@ Route::middleware('auth')->group(function () {
         Route::put('/usuarios/{id}', [UsuarioController::class, 'update']);
 
         Route::put('/usuarios/{id}/estado', [UsuarioController::class, 'cambiarEstado']);
+
+        // Reportes (solo Administrador)
+        Route::get('/reportes', [ReporteController::class, 'index']);
+        Route::get('/reportes/ventas', [ReporteController::class, 'ventas']);
+        Route::get('/reportes/pedidos', [ReporteController::class, 'pedidos']);
+        Route::get('/reportes/ventas/pdf', [ReporteController::class, 'ventasPdf']);
+        Route::get('/reportes/pedidos/pdf', [ReporteController::class, 'pedidosPdf']);
     });
 
 

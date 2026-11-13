@@ -427,6 +427,13 @@
 
                 </a>
 
+                <a href="/reportes"
+                    class="nav-link">
+
+                    📈 Reportes
+
+                </a>
+
 
             @else
 
